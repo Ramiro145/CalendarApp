@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthStore } from '../../hooks';
 
 export const AuthRouter = () => {
-  const authStatus = 'authenticated';
+  const {status, checkAuthToken} = useAuthStore();
 
-  if(authStatus === 'authenticated'){
+  useEffect(() => {
+    checkAuthToken();
+  }, [])
+
+  if(status === 'authenticated'){
     return <Navigate to={'/'}/>
   }
   return <Outlet/>
