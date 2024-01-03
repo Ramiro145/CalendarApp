@@ -4,7 +4,7 @@ import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from '../'
 import { addHours } from 'date-fns'
 import { localizer, getMessagesES} from '../../helpers/'
 import { useEventGetter, useUiStore, useCalendarInStore } from '../../hooks/'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
@@ -15,7 +15,7 @@ import { useState } from 'react'
 
 export const CalendarPage = () => {
   const {openDateModal} = useUiStore();
-  const {events, setActiveEvent} = useCalendarInStore();
+  const {events, setActiveEvent, startLoadingEvents} = useCalendarInStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView')||'week');
 
   const {eventStyleGetter} = useEventGetter()
@@ -30,6 +30,11 @@ export const CalendarPage = () => {
     localStorage.setItem('lastView', event)
     setLastView(event)
   }
+
+  useEffect(() => {
+    startLoadingEvents()
+  }, [])
+  
 
   return (
     <>
