@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux';
 import { useCalendarInStore } from '../../hooks'
 
 export const FabDelete = () => {
+    const {activeEvent} = useCalendarInStore();
     const{StartDeletingEvent, hasEventSelected}=useCalendarInStore();
 
     const {isDateModalOpen} = useSelector(state=> state.ui)
     
     const handleDelete= () =>{
-      StartDeletingEvent();
+      StartDeletingEvent(activeEvent);
     }
   return (
     <button

@@ -1,9 +1,15 @@
-export const useEventGetter = (event, start, end, isSelected) =>{
+import { useAuthStore } from "./useAuthStore"
 
-  const eventStyleGetter = () =>{
+
+export const useEventGetter = () =>{
+
+  const {user} = useAuthStore()
+
+  const eventStyleGetter = (event) =>{
+    const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid);
 
     const style = {
-      backgroundColor: '#347CF7',
+      backgroundColor: isMyEvent ? '#347CF7' : '#465660',
       borderRadius: '0px',
       opacity: 0.8,
       color: 'white',
@@ -13,7 +19,11 @@ export const useEventGetter = (event, start, end, isSelected) =>{
       style
     }
   }
+
+  
     return{
       eventStyleGetter
     }
   }
+
+  

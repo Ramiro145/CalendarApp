@@ -14,6 +14,7 @@ export const useCalendarInStore = () => {
     }
 
     const startSavingEvent = async(calendarEvent) =>{
+        console.log(calendarEvent)
         //todo update event
         try {
             if(calendarEvent.id){
@@ -32,10 +33,15 @@ export const useCalendarInStore = () => {
         
     }
 
-    const StartDeletingEvent = () =>{
-
-
-        dispatch(onDeleteEvent());
+    const StartDeletingEvent = async(calendarEvent) =>{
+        try {
+            const {data} = await calendarApi.delete(`/events/${calendarEvent.id}`)
+            Swal.fire('Actualizado', data.msg, 'success')
+            dispatch(onDeleteEvent());
+        } catch (error) {
+            console.log(error);
+            Swal.fire('Error al borrar', error.response.data.msg, 'error');
+        }
     }
 
     const startLoadingEvents = async() =>{
